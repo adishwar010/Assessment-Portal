@@ -82,7 +82,7 @@ const AdminBoxes = () => {
               </div>
             </div>
           </div>
-          <div className="col-12 col-lg-4">
+          {/* <div className="col-12 col-lg-4">
             <div className="adbox2  pt-2 pb-2">
               <div className="row">
                 <div className="col">
@@ -96,7 +96,7 @@ const AdminBoxes = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="col-12 col-lg-4 ">
             <div className="adbox3  pt-2 pb-2">
               <div className="row">

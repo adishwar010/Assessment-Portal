@@ -63,6 +63,18 @@ const TestQuestionsDatabase = (props) => {
         Header: "Answer",
         accessor: "answer",
       },
+      {
+        Header: "Taxonomy",
+        accessor: "difficulty",
+      },
+      {
+        Header: "Topic",
+        accessor: "topic",
+      },
+      {
+        Header: "Sub Topic",
+        accessor: "subtopic",
+      },
     ],
     []
   );

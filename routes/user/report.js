@@ -67,8 +67,8 @@ async function calculateTopicWise(responses) {
       // If the topic has already come before
       if (r.answer === question.answer) {
         topics[question.topic] = {
-          correct: topic[question.topic].correct + 1,
-          total: topic[question.topic].total + 1,
+          correct: topics[question.topic].correct + 1,
+          total: topics[question.topic].total + 1,
         };
       } else {
         topics[question.topic] = {

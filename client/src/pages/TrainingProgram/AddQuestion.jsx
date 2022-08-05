@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import logo1 from "../../images/logo.png";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import DatalistInput from 'react-datalist-input';
+import 'react-datalist-input/dist/styles.css';
+import Creatable from 'react-select/creatable';
+
 const Loader = () => <div className="loader"></div>;
 
 const AddQuestion = (props) => {
@@ -33,10 +37,18 @@ const AddQuestion = (props) => {
   const [answer, setanswer] = useState("");
   const [category, setcategory] = useState("");
   const [difficultyLevel, setDifficultyLevel] = useState("");
+  const [questionBank, setquestionBank] = useState([]);
+  // const [topics,settopics] = useState([]);
+  // const [subtopics,setsubtopics] = useState([]);
 
   // Topic and Subtoic addition
   const [topic, setTopic] = useState("");
   const [subtopic, setSubtopic] = useState("");
+  const [topicsoptions, settopicoptions] = useState([]);
+  const [subtopicsoptions, setsubtopicoptions] = useState([]);
+
+
+
 
   async function Onsubmit(event) {
     showLoader();
@@ -48,6 +60,8 @@ const AddQuestion = (props) => {
         Authorization: `Admin ${localStorage.getItem("Admin")}`,
       },
     };
+
+
     let img1url = "",
       img2url = "",
       img3url = "",
@@ -199,6 +213,99 @@ const AddQuestion = (props) => {
     setcategory("");
     event.target.reset();
   }
+
+  useEffect(async () => {
+    if (localStorage.getItem("Admin")) {
+      const config = {
+        headers: {
+          Authorization: `Admin ${localStorage.getItem("Admin")}`,
+        },
+      };
+      try {
+        const res = await axios.get(
+          "/api/v1/admin/test/" + props.match.params.id,
+          config
+        );
+        // console.log(res.data.data.test.questionBank);
+        setquestionBank(res.data.data.test.questionBank);
+        const topi = [];
+        const subtopi = [];
+        res.data.data.test.questionBank.forEach((data) => {
+          // topi.push(data.topic);
+          topi.push({ label: data.topic, value: data.topic });
+          subtopi.push({ label: data.subtopic, value: data.subtopic });
+        });
+        const topics = [...new Set(topi.map(JSON.stringify))].map(JSON.parse);
+        // console.log(typeof (topics));
+
+        const subtopics = [...new Set(subtopi.map(JSON.stringify))].map(JSON.parse);
+
+        settopicoptions(topics);
+        setsubtopicoptions(subtopics);
+
+      } catch (err) {
+        console.log(err);
+        if (err.response && err.response.data) alert(err.response.data.message);
+      }
+    } else {
+      history.push("/admin");
+    }
+  }, []);
+
+  console.log("t", questionBank);
+  // const topi = [];
+  // const subtopi = [];
+  // questionBank.forEach((data)=>{
+  //   // topi.push(data.topic);
+  //   topi.push({label: data.topic, value: data.topic });
+  //   subtopi.push({label: data.subtopic, value: data.subtopic });
+  // });
+
+  // const topics = [...new Set(topi)]
+  // const topics = [...new Set(topi.map(JSON.stringify))].map(JSON.parse);
+  // console.log(typeof (topics))
+
+  // const subtopics = [...new Set(subtopi.map(JSON.stringify))].map(JSON.parse);
+
+
+  // settopicoptions(topi);
+  // setsubtopicoptions(subtopics);
+  console.log("topics", topicsoptions);
+  console.log("subtopics", subtopicsoptions);
+
+
+  function AppendSetdata(Value) {
+    var present = false;
+    for (let i = 0; i < topicsoptions.length; i++) {
+      if (topicsoptions[i].value == Value) {
+        present = true;
+      }
+    }
+    if (!present) {
+      var tempdata = topicsoptions;
+      tempdata.push({ label: Value, value: Value });
+      settopicoptions(tempdata);
+    }
+    setTopic(Value);
+    // alert(topic);
+  }
+
+  function AppendSetSubTopics(Value) {
+    var present = false;
+    for (let i = 0; i < topicsoptions.length; i++) {
+      if (topicsoptions[i].value == Value) {
+        present = true;
+      }
+    }
+    if (!present) {
+      var tempdata = topicsoptions;
+      tempdata.push({ label: Value, value: Value });
+      setsubtopicoptions(tempdata);
+    }
+    setSubtopic(Value);
+    // alert(topic);
+  }
+
 
   return (
     <>
@@ -427,6 +534,20 @@ const AddQuestion = (props) => {
                     <option>Knowledge</option>
                   </select>
                 </div>
+                {/* <p>Topic</p>
+                <select >
+      {topics.map((o) => {
+        const  name = o;
+        return <option>{name}</option>;
+      })}
+    </select> */}
+
+                {/* <Creatable
+                  options={topicsoptions}
+                onChange={(opt, meta) =>AppendSetdata(opt.value)}
+                /> */}
+
+
                 <div className="col">
                   <label for="quescat">
                     <h6>Question Category :</h6>
@@ -457,21 +578,48 @@ const AddQuestion = (props) => {
                   </select>
                 </div>
               </div>
+              {/* <label>
+    Choose a browser from this list:
+    <input list="browsers" name="myBrowser" />  
+</label>   
+<datalist id="browsers">
+    {topics.map((o) => {
+        const  name = o;
+        return <option>{name}</option>;
+      })}   
+</datalist> */}
+
+
 
               <div className="row mt-5">
                 <div className="col">
                   <label for="topic">
                     <h6>Topic:</h6>
                   </label>
-                  <input id="topic" className="form-control" type="text" value={topic} onChange={(e)=>setTopic(e.target.value)}/>
+
+                  {/* <input id="topic" className="form-control" type="text" value={topic} onChange={(e) => setTopic(e.target.value)} /> */}
+                  <Creatable
+                    options={topicsoptions}
+                    onChange={(opt, meta) => AppendSetdata(opt.value)}
+                  />
                 </div>
 
                 <div className="col">
                   <label for="subtopic">
                     <h6>Subtopic:</h6>
                   </label>
-                  <input id="subtopic" className="form-control" type="text" value={subtopic} onChange={(e)=>setSubtopic(e.target.value)}/>
+                  {/* <input id="subtopic" className="form-control" type="text" value={subtopic} onChange={(e) => setSubtopic(e.target.value)} /> */}
+                  <Creatable
+                    options={subtopicsoptions}
+                    onChange={(opt, meta) => AppendSetSubTopics(opt.value)}
+                  />
                 </div>
+              </div>
+
+              <div className="text-danger">
+                <label >
+                  <h9>*If Topic/Subtopic not present in dropdown, please select it again after creating in dropdown*</h9>
+                </label>
               </div>
 
               <div className="text-center mt-5 mb-5">
@@ -479,7 +627,7 @@ const AddQuestion = (props) => {
                   type="submit"
                   class="btn text-white"
                   style={{ backgroundColor: "#0E3B7D" }}
-                  //   onClick={Onsubmit}
+                //   onClick={Onsubmit}
                 >
                   Submit Question
                 </button>
