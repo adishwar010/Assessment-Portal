@@ -51,7 +51,8 @@ import ResultWithQuestions from "./pages/TrainingProgram/User/ResultWithQuestion
 import ResultData from "./pages/TrainingProgram/ResultData";
 import StudentDashboard from "./pages/TrainingProgram/User/StudentDashboard";
 import AdminAllModules from "./pages/TrainingProgram/AdminAllModules";
-import QuestionAddExcel from "./pages/QuestionAddExcel"
+import QuestionAddExcel from "./pages/QuestionAddExcel";
+import ResultDropDown from "./pages/TrainingProgram/User/ResultDropDown";
 
 // axios.defaults.baseURL = "https://adsatiitropar.com";
 
@@ -75,6 +76,7 @@ function App() {
         <Route path="/camera" component={Cameraweb} />
         <Route path="/A-DSAT_Registration" component={ADSATreg} />
         <Route path="/adminallmodules" component={AdminAllModules} />
+        <Route path="/resultdd" component={ResultDropDown} />
 
         <Route path="/addingquestions" component={QuestionAddDemo} />
         <Route path="/questionaddlogin" component={QuestionAddLogin} />

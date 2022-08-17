@@ -193,9 +193,9 @@ const AllTest = () => {
         };
         try {
           
-          console.clear();
+          // console.clear();
           const subId = localStorage.getItem('Subtopicid');
-          console.log(subId);
+          // console.log("sub",subId);
           const res = await axios.get(`/api/v1/test/subtopics`, config);
           const respo = await fetch(`/api/v1/test/subtopics/${subId}`, config);
           const res1 = await axios.get('/api/v1/test/resultAll', config);

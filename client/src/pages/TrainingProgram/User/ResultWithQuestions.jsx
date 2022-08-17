@@ -41,17 +41,19 @@ const ResultWithQuestions = (props) => {
             config
           );
 
+          
+
           setReport(reportData.data.data);
-          // console.log("report",reportData);
-          console.log("res = ", res.data);
+          console.log("report",reportData);
+          // console.log("res = ", res.data);
           console.log(res);
 
           console.log(res.data.data.questionResponses);
           setquestionResponses(res.data.data.questionResponses);
           settest(res.data.data.test);
         } catch (err) {
-          // console.log(err);
-          alert("Test Is Not attempted");
+          console.log(err);
+          // alert("Test Is Not attempted");
         }
       } else {
         history.push("/");
