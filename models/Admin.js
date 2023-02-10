@@ -16,6 +16,10 @@ const AdminSchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
+  dept:{
+    type: String,
+    required: true
+  }
 });
 
 AdminSchema.pre("save", async function (next) {

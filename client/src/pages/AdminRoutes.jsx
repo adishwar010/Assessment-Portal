@@ -23,6 +23,10 @@ const AdminRoutes = () => {
     history.push('/A-DSAT_Registration');
   }
 
+  function imp(){
+    history.push('/importdata');
+  }
+
   const getExpirationDate = (jwtToken) => {
     if (!jwtToken) {
       return null;
@@ -183,6 +187,23 @@ const AdminRoutes = () => {
                 </p>
                 <button className="btn btn-danger " onClick={registrations}>
                   Check Registration
+                </button>
+              </div>
+              <div class="card-footer text-muted">Admin</div>
+            </div>
+          </div>
+
+          <div className="col-12 col-lg-4 mt-5 mt-lg-0 mb-5 mb-lg-0">
+            <div class="card text-center" style={styles}>
+              <div class="card-header">Add Employees</div>
+              <div class="card-body">
+                <h5 class="card-title">Import Employees</h5>
+                <p class="card-text" style={{ fontSize: '17px' }}>
+                Import Employees from Excel, CSV files....
+                  <br />
+                </p>
+                <button className="btn btn-danger " onClick={imp}>
+                  Add
                 </button>
               </div>
               <div class="card-footer text-muted">Admin</div>

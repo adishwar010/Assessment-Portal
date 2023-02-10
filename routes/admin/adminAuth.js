@@ -16,6 +16,7 @@ router.use('/registrationStats', require('./registrationStats'));
 router.use('/course', require('./createCourseOutline'));
 router.use('/results', require('./results'));
 router.use('/excelData', require('./excelStatsData'));
+router.use('/addemployees', require('./addemployee'));
 
 router.post(
   '/login',
@@ -35,10 +36,10 @@ router.post(
       const { username, password } = req.body;
 
       let user = await Admin.findOne({ username });
+      console.log(user);
       if (!user) {
         throw new Error('No Such User Present');
       }
-
       user.comparePassword(password, (err, isMatch) => {
         if (err) throw err;
         if (!isMatch) {
@@ -46,11 +47,14 @@ router.post(
             .status(400)
             .json(failErrorResponse('Credentials Provided are not correct'));
         }
+        
         const payload = {
           user: {
             id: user._id,
           },
         };
+
+       
 
         jwt.sign(
           payload,
@@ -61,12 +65,14 @@ router.post(
             return res.json({
               status: 'success',
               data: {
-                token,
+                token
               },
+              dept: user.dept
             });
           }
         );
-      });
+      },
+      );
     } catch (err) {
       next(err);
     }
@@ -74,12 +80,13 @@ router.post(
 );
 
 // TODO: This is development route and needs to be removed before pusing the code to prodution
-router.post('/admin/create/new', async (req, res) => {
+router.post('/create/new', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, dept } = req.body;
     let user = new Admin({
       username,
       password,
+      dept,
     });
     await user.save();
     const payload = {

@@ -53,6 +53,7 @@ import StudentDashboard from "./pages/TrainingProgram/User/StudentDashboard";
 import AdminAllModules from "./pages/TrainingProgram/AdminAllModules";
 import QuestionAddExcel from "./pages/QuestionAddExcel";
 import ResultDropDown from "./pages/TrainingProgram/User/ResultDropDown";
+import ImportData from "./pages/ImportData";
 
 // axios.defaults.baseURL = "https://adsatiitropar.com";
 
@@ -122,6 +123,8 @@ function App() {
         <Route path="/moduletest/:id" component={ModuleTest} />
         <Route path="/adminmodule/:id" component={AdminModules} />
         <Route path="/studentnotgiventest/:id/:type" component={ResultData} />
+
+        <Route path="/importdata" component={ImportData} />
       </Switch>
     </>
   );

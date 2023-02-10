@@ -49,7 +49,7 @@ const L2Result = () => {
         '/api/v1/admin/excelData/testAlldetails',
         config
       );
-      console.log(res1);
+      console.log("res1",res1);
       hideLoader();
       // setstudentstestdetails(res1.data.data.data);
       exportFromJSON({ data: res1.data.data.data, fileName, exportType });
